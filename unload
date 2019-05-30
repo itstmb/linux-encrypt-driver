@@ -1,0 +1,8 @@
+#!/bin/sh
+module="encdec"
+device="encdec"
+
+/sbin/rmmod $module $* || exit 1
+
+#remove stale nodes
+rm -f /dev/${device}*

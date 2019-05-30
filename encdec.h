@@ -1,0 +1,11 @@
+#ifndef _ENCDEC_H_
+#define _ENCDEC_H_
+
+#define ENCDEC_CMD_CHANGE_KEY		0
+#define ENCDEC_CMD_SET_READ_STATE	1
+#define ENCDEC_CMD_ZERO				2
+
+#define ENCDEC_READ_STATE_RAW		0
+#define ENCDEC_READ_STATE_DECRYPT	1
+
+#endif

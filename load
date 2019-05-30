@@ -1,0 +1,20 @@
+#!/bin/sh
+module="encdec"
+device="encdec"
+
+if [ -z "$1" ]; then
+  memory_size=50
+else
+  memory_size=$1
+fi
+
+/sbin/insmod ./$module.o memory_size=$memory_size || exit 1
+
+#remove stale nodes
+rm -f /dev/${device}*
+
+major=`cat /proc/devices | awk "\\$2==\"$module\" {print \\$1}"`
+for ((i=0;i<2;i++))
+do
+  mknod /dev/${device}$i c $major $i
+done
