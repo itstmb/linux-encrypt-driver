@@ -57,8 +57,6 @@ struct file_operations fops_xor = {
 	.owner 	 =	THIS_MODULE
 };
 
-// Implemetation suggestion:
-// -------------------------
 // Use this structure as your file-object's private data structure
 typedef struct {
 	unsigned char key;
@@ -77,10 +75,7 @@ int init_module(void)
 		return major;
 	}
 
-	// Implemetation suggestion:
-	// -------------------------
 	// 1. Allocate memory for the two device buffers using kmalloc (each of them should be of size 'memory_size')
-
 	caesar_buffer = kmalloc(memory_size, GFP_KERNEL);
 	xor_buffer = kmalloc(memory_size, GFP_KERNEL);
 
@@ -94,8 +89,6 @@ int init_module(void)
 
 void cleanup_module(void)
 {
-	// Implemetation suggestion:
-	// -------------------------
 	// 1. Unregister the device-driver
 	printk("encdec: unregistering\n");
 	unregister_chrdev(major, MODULE_NAME);
@@ -109,8 +102,6 @@ int encdec_open(struct inode *inode, struct file *filp)
 {
 	int minor = MINOR(inode->i_rdev);
 
-	// Implemetation suggestion:
-	// -------------------------
 	// 1. Set 'filp->f_op' to the correct file-operations structure (use the minor value to determine which)
 
 	if (minor == 0) // Caesar Cipher
@@ -137,8 +128,6 @@ int encdec_open(struct inode *inode, struct file *filp)
 
 int encdec_release(struct inode *inode, struct file *filp)
 {
-	// Implemetation suggestion:
-	// -------------------------
 	// 1. Free the allocated memory for 'filp->private_data' (using kfree)
 	printk("encdec: freeing private data\n");
 	kfree(&filp->private_data);
@@ -148,8 +137,6 @@ int encdec_release(struct inode *inode, struct file *filp)
 
 int encdec_ioctl(struct inode *inode, struct file *filp, unsigned int cmd, unsigned long arg)
 {
-	// Implemetation suggestion:
-	// -------------------------
 	// 1. Update the relevant fields in 'filp->private_data' according to the values of 'cmd' and 'arg'
 	if (cmd == ENCDEC_CMD_CHANGE_KEY)
 	{
